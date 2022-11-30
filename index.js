@@ -59,4 +59,10 @@ inquirer.prompt([
       message: "What should the license be for your project?",
       choices: ["Unlicense", "MIT License", "GNU GPLv3", "No License"]
     }
-  ])
+  ]).then(results => {
+    let data = ''
+
+    data += `# ${results.Title} \n\n`
+
+    writeToFile('output/README.md', data)
+})
