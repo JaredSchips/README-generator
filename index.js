@@ -7,8 +7,3 @@ function writeToFile(fileName, data) {
     fs.writeFile(fileName, data, (error) => error ? console.log(error) : console.log('README created sucessfully'))
 }
 
-// TODO: Create a function to initialize app
-function init() {}
-
-// Function call to initialize app
-init();
