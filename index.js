@@ -7,6 +7,8 @@ function writeToFile(fileName, data) {
     fs.writeFile(fileName, data, (error) => error ? console.log(error) : console.log('README created sucessfully'))
 }
 
+const sections = ["Title", "Description", "Installation", "Usage", "Features", "Badges", "Tests", "Contribution", "Credits", "License"]
+
 inquirer.prompt([
     {
       name: "Title",
@@ -63,6 +65,11 @@ inquirer.prompt([
     let data = ''
 
     data += `# ${results.Title} \n\n`
+
+    for (const section of sections.slice(1, -1)) {
+        data += `## ${section} \n\n`
+        data += results[section] + '\n\n'
+    }
 
     writeToFile('output/README.md', data)
 })
