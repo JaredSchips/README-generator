@@ -7,7 +7,7 @@ function writeToFile(fileName, data) {
     fs.writeFile(fileName, data, (error) => error ? console.log(error) : console.log('README created sucessfully'))
 }
 
-const sections = ["Title", "Description", "Installation", "Usage", "Features", "Badges", "Tests", "Contribution", "Credits", "License"]
+const sections = ["Title", "Description", "Table Of Contents", "Installation", "Usage", "Features", "Badges", "Tests", "Contribution", "Credits", "License"]
 
 inquirer.prompt([
     {
@@ -63,6 +63,11 @@ inquirer.prompt([
     }
   ]).then(results => {
     let data = ''
+
+    results['Table Of Contents'] = ''
+    for (const section of sections.slice(3)) {
+        results['Table Of Contents'] += `[${section}](#${section}) \n\n`
+    }
 
     data += `# ${results.Title} \n\n`
 
