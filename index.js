@@ -63,6 +63,8 @@ inquirer.prompt([
     }
   ]).then(results => {
     let data = ''
+    
+    if (results.License === 'No License') results.License = ''
 
     results['Table Of Contents'] = ''
     for (const section of sections.slice(3)) {
@@ -74,6 +76,11 @@ inquirer.prompt([
     for (const section of sections.slice(1, -1)) {
         data += `## ${section} \n\n`
         data += results[section] + '\n\n'
+    }
+
+    if (results.License) {
+        data += `## License \n\n`
+        data += `Licensed under ${results.License}`
     }
 
     writeToFile('output/README.md', data)
