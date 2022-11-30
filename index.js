@@ -65,6 +65,19 @@ inquirer.prompt([
     let data = ''
     
     if (results.License === 'No License') results.License = ''
+    
+    let badgeMD = ''
+    switch (results.License) {
+      case 'Unlicense':
+        badgeMD = '[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)'
+        break
+      case 'MIT License':
+        badgeMD = '[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)'
+        break
+      case 'GNU GPLv3':
+        badgeMD = '[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)'
+        break
+    }
 
     results['Table Of Contents'] = ''
     for (const section of sections.slice(3)) {
@@ -72,6 +85,8 @@ inquirer.prompt([
     }
 
     data += `# ${results.Title} \n\n`
+    
+    if (results.License) data += badgeMD + `\n\n`
 
     for (const section of sections.slice(1, -1)) {
         data += `## ${section} \n\n`
