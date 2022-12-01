@@ -86,13 +86,14 @@ inquirer.prompt([
     }
   ]).then(results => {
     let data = ''
+    const {Include, Title, License} = results
 
-    shouldInclude = (sectionName) => results.Include.includes(sectionName)
+    shouldInclude = (sectionName) => Include.includes(sectionName)
     
-    if (results.License === 'No License') results.License = ''
+    if (License === 'No License') License = ''
     
     let badgeMD = ''
-    switch (results.License) {
+    switch (License) {
       case 'Unlicense':
         badgeMD = '[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)'
         break
@@ -111,9 +112,9 @@ inquirer.prompt([
         }
     }
 
-    if (shouldInclude('Title')) data += `# ${results.Title} \n\n`
+    if (shouldInclude('Title')) data += `# ${Title} \n\n`
     
-    if (results.License) data += badgeMD + `\n\n`
+    if (License) data += badgeMD + `\n\n`
 
     for (const section of sections.slice(1, -1)) {
         if (shouldInclude(section)) {
@@ -122,9 +123,9 @@ inquirer.prompt([
         }
     }
 
-    if (results.License) {
+    if (License) {
         data += `## License \n\n`
-        data += `Licensed under ${results.License}`
+        data += `Licensed under ${License}`
     }
 
     writeToFile('output/README.md', data)
