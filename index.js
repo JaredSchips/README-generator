@@ -11,49 +11,64 @@ const sections = ["Title", "Description", "Table Of Contents", "Installation", "
 
 inquirer.prompt([
     {
+      name: "Include",
+      type: "checkbox",
+      message: "What do you want to include in the README?",
+      choices: sections.slice(0,-1)
+    },
+    {
       name: "Title",
       type: "input",
       message: "What's your project's name?",
+      when: results => results.Include.includes("Title")
     },
     {
       name: "Description",
       type: "input",
       message: "What's your project's description?",
+      when: results => results.Include.includes("Description")
     },
     {
       name: "Installation",
       type: "input",
       message: "What are the installation instructions?",
+      when: results => results.Include.includes("Installation")
     },
     {
       name: "Usage",
       type: "input",
       message: "How do you use this project?",
+      when: results => results.Include.includes("Usage")
     },
     {
       name: "Features",
       type: "input",
       message: "What features are included in this project?",
+      when: results => results.Include.includes("Features")
     },
     {
       name: "Badges",
       type: "input",
       message: "What badges do you have?",
+      when: results => results.Include.includes("Badges")
     },
     {
       name: "Tests",
       type: "input",
       message: "What are some tests you can run on this project?",
+      when: results => results.Include.includes("Tests")
     },
     {
       name: "Contribution",
       type: "input",
       message: "What are the guidelines for contributing to your project?",
+      when: results => results.Include.includes("Contribution")
     },
     {
       name: "Credits",
       type: "input",
       message: "Who should be included in the credits?",
+      when: results => results.Include.includes("Credits")
     },
     {
       name: "License",
@@ -63,6 +78,8 @@ inquirer.prompt([
     }
   ]).then(results => {
     let data = ''
+
+    shouldInclude = (sectionName) => results.Include.includes(sectionName)
     
     if (results.License === 'No License') results.License = ''
     
@@ -81,16 +98,20 @@ inquirer.prompt([
 
     results['Table Of Contents'] = ''
     for (const section of sections.slice(3)) {
-        results['Table Of Contents'] += `[${section}](#${section}) \n\n`
+        if (shouldInclude(section)) {
+            results['Table Of Contents'] += `[${section}](#${section}) \n\n`
+        }
     }
 
-    data += `# ${results.Title} \n\n`
+    if (shouldInclude('Title')) data += `# ${results.Title} \n\n`
     
     if (results.License) data += badgeMD + `\n\n`
 
     for (const section of sections.slice(1, -1)) {
-        data += `## ${section} \n\n`
-        data += results[section] + '\n\n'
+        if (shouldInclude(section)) {
+            data += `## ${section} \n\n`
+            data += results[section] + '\n\n'
+        }
     }
 
     if (results.License) {
