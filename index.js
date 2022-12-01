@@ -8,13 +8,21 @@ function writeToFile(fileName, data) {
 }
 
 const sections = ["Title", "Description", "Table Of Contents", "Installation", "Usage", "Features", "Badges", "Tests", "Contribution", "Credits", "License"]
+const defaultSections = ["Title", "Description", "Installation", "Usage", "Credits", "License"]
+const sectionObjs = []
+for (section of sections) {
+  sectionObjs.push({
+    name: section,
+    checked: defaultSections.includes(section)
+  })
+}
 
 inquirer.prompt([
     {
       name: "Include",
       type: "checkbox",
       message: "What do you want to include in the README?",
-      choices: sections.slice(0,-1)
+      choices: sectionObjs.slice(0,-1)
     },
     {
       name: "Title",
