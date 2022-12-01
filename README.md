@@ -11,7 +11,8 @@ An application which asks a series of questions and uses the answers to create a
 1. Install NodeJS
 2. Clone this repository
 3. Navigate to the same directory as index.js
-4. Run `node index.js` in your console
+4. Run `npm install` in your console
+5. Run `node index.js` in your console
 
 ## Usage 
 
